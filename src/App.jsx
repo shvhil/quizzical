@@ -39,15 +39,27 @@ function App() {
   const [questions, setQuestions] = useState([]);
   const [error, setError] = useState(null);
   const [fetchTrigger, setFetchTrigger] = useState(0);
+  const [quizOptions, setQuizOptions] = useState({ amount: 5 });
 
   useEffect(() => {
     if (quizState !== "loading") return;
 
     setError(null);
     setTimeout(() => {
-      fetch(
-        "https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple"
-      )
+      let apiUrl = `https://opentdb.com/api.php?amount=${quizOptions.amount}`;
+      if (quizOptions.category) {
+        apiUrl += `&category=${quizOptions.category}`;
+      }
+      if (quizOptions.difficulty) {
+        apiUrl += `&difficulty=${quizOptions.difficulty}`;
+      }
+      if (quizOptions.type) {
+        apiUrl += `&type=${quizOptions.type}`;
+      }
+
+      console.log("Fetching URL:", apiUrl);
+
+      fetch(apiUrl)
         .then((res) => {
           if (!res.ok) {
             throw new Error("Network response was not ok");
@@ -60,11 +72,18 @@ function App() {
               throw new Error(
                 "Could not return results. The API does not have enough questions for your query."
               );
+            } else if (data.response_code === 2) {
+              throw new Error(
+                "Invalid parameter contains an invalid argument."
+              );
             } else {
               throw new Error(
                 "API returned an error code: " + data.response_code
               );
             }
+          }
+          if (!data.results || data.results.length === 0) {
+            throw new Error("No questions found for the selected criteria.");
           }
 
           const formattedQuestions = data.results.map((q, index) => {
@@ -77,7 +96,7 @@ function App() {
             const shuffledAnswers = allAnswers.sort(() => Math.random() - 0.5);
 
             return {
-              id: `q-${index}-${fetchTrigger}`,
+              id: `q-${index}-${fetchTrigger}-${quizOptions.category}-${quizOptions.difficulty}-${quizOptions.type}`,
               question: decodeHtml(q.question),
               correctAnswer: correctAnswer,
               allAnswers: shuffledAnswers,
@@ -95,9 +114,10 @@ function App() {
           setQuizState("error");
         });
     }, 500);
-  }, [quizState, fetchTrigger]);
+  }, [quizState, fetchTrigger, quizOptions]);
 
-  function startQuiz() {
+  function startQuiz(options) {
+    setQuizOptions((prevOptions) => ({ ...prevOptions, ...options }));
     setQuizState("loading");
     setQuestions([]);
   }
@@ -106,7 +126,6 @@ function App() {
     setQuizState("start");
     setQuestions([]);
     setError(null);
-    setFetchTrigger((prev) => prev + 1);
   }
 
   function tryAgain() {
