@@ -12,7 +12,7 @@ Quizzical is a responsive React-based trivia quiz app that fetches dynamic data 
 
 ## Demo Link to the Webapp :D
 
-https://quizzical-mu.vercel.app
+https://quizzical-peach-psi.vercel.app/
 
 ## Setup Instructions
 
