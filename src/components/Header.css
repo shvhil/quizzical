@@ -1,0 +1,19 @@
+.app-header {
+  width: 100%;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-container {
+}
+
+.logo-text {
+  font-family: "Inter", sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #9b59b6;
+}

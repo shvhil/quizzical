@@ -1,0 +1,82 @@
+.question-container {
+  margin-bottom: 1.5rem;
+}
+
+.question-text {
+  color: #e0e0e0; /* Lighter text for question */
+  margin-bottom: 1rem;
+  font-weight: 500;
+  text-align: left;
+}
+
+.answers-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem; /* Space between buttons */
+  justify-content: flex-start;
+}
+
+.answer-button {
+  background-color: transparent; /* Default: Transparent background */
+  color: #9b59b6; /* Accent color text */
+  border: 1px solid #9b59b6; /* Accent color border */
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease;
+  min-width: 80px; /* Ensure some minimum width */
+  text-align: center;
+}
+
+.answer-button:hover:not(:disabled) {
+  background-color: rgba(
+    155,
+    89,
+    182,
+    0.1
+  ); /* Slight violet background on hover */
+}
+
+/* --- State Styles --- */
+
+/* Selected answer during quiz */
+.answer-button.selected {
+  background-color: #4a2a5a; /* Darker violet background */
+  color: #fff; /* White text */
+  border-color: #4a2a5a; /* Match background */
+}
+
+/* Correct answer after quiz finished */
+.answer-button.correct {
+  background-color: #2ecc71; /* Green */
+  color: #fff;
+  border-color: #2ecc71;
+  font-weight: 700;
+}
+
+/* Incorrectly selected answer after quiz finished */
+.answer-button.incorrect {
+  background-color: #e74c3c; /* Red */
+  color: #fff;
+  border-color: #e74c3c;
+  opacity: 0.7; /* Slightly faded */
+}
+
+/* Unselected/Disabled answers after quiz finished */
+.answer-button.disabled {
+  opacity: 0.5;
+  cursor: default;
+  border-color: rgba(155, 89, 182, 0.5);
+  color: rgba(155, 89, 182, 0.7);
+}
+
+.question-divider {
+  border: none;
+  height: 1px;
+  background-color: #444; /* Dark gray divider */
+  margin-top: 1.5rem;
+}
